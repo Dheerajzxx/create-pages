@@ -16,6 +16,7 @@ use App\Http\Controllers\API\PagesController;
 */
 
 Route::prefix('pages')->group( function(){
-  Route::get('/{id}', [PagesController::class, 'index']);
-  Route::post('/store', [PagesController::class, 'store']);
+  Route::get('/{id}/{p_id?}', [PagesController::class, 'index']);
+  Route::get('/nested/{slug}', [PagesController::class, 'nested_page']);
+  Route::post('/save', [PagesController::class, 'store']);
 });

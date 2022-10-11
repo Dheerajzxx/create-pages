@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="d-flex justify-content-center">
-      <h1>HomePage</h1>
+      <h1>Level 2</h1>
     </div>
       <div class="d-flex justify-content-center">
-    <button class="btn btn-primary mb-4" @click="openAddModel(parent_id)">Add New Page</button><br>
+    <button class="btn btn-primary mb-4" @click="openAddModel(parent_id, this.$route.params.id)">Add Items</button><br>
     </div>
     <add-page ref="addpage"></add-page>
     <div v-for="(item) in getPages" :key="item.id" class="card mx-2" style="width: 18rem;display:inline-block">
@@ -24,12 +24,12 @@ export default {
   components: { AddPage },
   data() {
     return {      
-      parent_id: 1,
+      parent_id: 2,
     }
   },
   methods: {
-    openAddModel(parent_id) {
-      this.$refs.addpage.open({parent_id});
+    openAddModel(parent_id, id) {
+      this.$refs.addpage.open({parent_id, id});
     },
     openPage(slug, id){
       let data = [];
@@ -38,7 +38,7 @@ export default {
       store.dispatch("getNestedPages", data)
       .then((res) => {
         if (res.success) {
-          router.push({ name: 'Page2', params: { slug: slug, id:id } });
+          router.push({ name: 'Page3', params: { slug: slug, id:id } });
         }
       })
       .catch((err) => {
@@ -48,13 +48,13 @@ export default {
   },
   created: function(){
     let data = [];
-    data['id']=1;
-    data['p_id']='';
+    data['id']=2;
+    data['p_id']=this.$route.params.id;
     store.dispatch("getPages", data);
   },
   computed: {
     getPages() {
-      return this.$store.getters.getPages;
+      return this.$store.getters.getPages1;
     },
   },
 }
