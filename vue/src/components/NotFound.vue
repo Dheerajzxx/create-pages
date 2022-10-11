@@ -3,7 +3,7 @@
   <div class="stars">
     <div class="central-body">
         <img class="image-404" src="http://salehriaz.com/404Page/img/404.svg" width="300px">
-        <a href="http://salehriaz.com/404Page/404.html" class="btn-go-home" target="_blank">GO BACK HOME</a>
+        <a href="#" class="btn-go-home">GO BACK HOME</a>
     </div>
     <div class="objects">
         <img class="object_rocket" src="http://salehriaz.com/404Page/img/rocket.svg" width="40px">
@@ -230,10 +230,6 @@ li a:hover {
     transform: rotate(0deg);
     transition: transform ease-in 99999999999s;
 */
-}
-
-.earth-moon{
-    
 }
 
 .object_astronaut{

@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\PagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('pages')->group( function(){
+  Route::get('/{id}', [PagesController::class, 'index']);
+  Route::post('/store', [PagesController::class, 'store']);
 });
