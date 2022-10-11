@@ -48,8 +48,17 @@ const store = createStore({
       })
     },
     async savePage({commit}, data) {
+      console.log(data);
       return await axiosClient.post('/pages/save', data)
       .then(res => {
+        return res.data;
+      })
+    },
+    async deletePage({commit}, data) {
+      console.log(data);
+      return await axiosClient.post('/pages/delete', data)
+      .then(res => {
+        console.log(res.data);
         return res.data;
       })
     },

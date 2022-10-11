@@ -11,6 +11,7 @@
       <div class="card-body">
         <h5 class="card-title" style="cursor: pointer;" @click="openPage(item.slug, item.id)">{{item.title}}</h5>
         <p class="card-text">{{item.content}}</p>
+        <button @click="deleteThis(item.id)" class="btn btn-sm btn-danger float-right">Delete</button>
       </div>
     </div>
   </div>
@@ -25,9 +26,24 @@ export default {
   data() {
     return {      
       parent_id: 4,
+      Form: {
+        id:undefined,
+      }
     }
   },
   methods: {
+    deleteThis(id){
+      this.Form.id = id;
+      store.dispatch("deletePage", this.Form)
+      .then((res) => {
+        if (res.success) {
+          this.$router.go()
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    },
     openAddModel(parent_id, id) {
       this.$refs.addpage.open({parent_id, id});
     },

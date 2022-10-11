@@ -29,34 +29,6 @@ class PagesController extends Controller
           'pages' => $pages
         ]);
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function nested_page($slug, Request $req)
-    {
-        $page = Page::where('slug', $slug)->first();
-        if($page)
-        $nested_pages = Page::where('parent_id', $page->id)->get();
-        else
-        $nested_pages = [];
-        return response()->json([
-          'success' => true,
-          'message' =>  'data retrived',
-          'pages' => $nested_pages
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-      return 'create';
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -105,28 +77,6 @@ class PagesController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Page  $pages
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Page $pages)
-    {
-      return 'show';
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Page  $pages
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Page $pages)
-    {
-      return 'edit';
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -144,8 +94,22 @@ class PagesController extends Controller
      * @param  \App\Models\Page  $pages
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Page $pages)
+    public function destroy(Request $req)
     {
-      return 'destroy';
+      $page = Page::find($req->id);
+      if ($page) {
+        Page::find($req->id)->delete();
+        return response()->json([
+          'success' => true,
+          'message' =>  'Page Deleted Successfully',
+          'page' => []
+        ]);
+      }else{
+        return response()->json([
+          'success' => false,
+          'message' =>  'Page Data Not Found',
+          'page' => []
+        ]);
+      }
     }
 }
