@@ -1,3 +1,6 @@
+#	Framework Uesd
+laravel 8.7 and vuejs 3.2
+
 # Clone repository
 git clone https://github.com/Dheerajzxx/create-pages.git
 
