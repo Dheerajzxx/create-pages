@@ -41,11 +41,6 @@ class PagesController extends Controller
       try {
         DB::beginTransaction();
         $data = $request->except('id');
-        $title = explode(' ',$data['title']);
-        $titleSlug = '';
-        foreach ($title as $key => $value) {
-          $titleSlug .= '-'.$value;
-        }
         if($data['parent_id']==1)
         $data['slug'] = $data['parent_id'];
         else if(isset($request->id) && $request->id)
@@ -66,7 +61,7 @@ class PagesController extends Controller
           DB::rollback();
           return response()->json([
             'success' => false,
-            'message' => $error,
+            'message' => 'Page Not Saved',
             'page' => []
           ]);
         }
@@ -85,7 +80,31 @@ class PagesController extends Controller
      */
     public function update(Request $request, Page $pages)
     {
-      return 'update';
+      try {
+        DB::beginTransaction();
+        $data = $request->only('title', 'content');
+        
+        $page = Page::whereId($request->id)->update($data);
+
+        if($page){
+          DB::commit();
+          return response()->json([
+            'success' => true,
+            'message' =>  'Page Updated Successfully',
+            'page' => $page
+          ]);
+        }else{
+          DB::rollback();
+          return response()->json([
+            'success' => false,
+            'message' => 'Page Not Saved',
+            'page' => []
+          ]);
+        }
+      } catch (\Throwable $th) {
+        DB::rollback();
+        return $th;
+      }
     }
 
     /**
